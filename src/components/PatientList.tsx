@@ -36,9 +36,9 @@ export const PatientList: React.FC<PatientListProps> = ({
 
   const filteredPatients = patients.filter((p) => {
     const matchesSearch =
-      p.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.dni.includes(searchQuery) ||
-      p.email.toLowerCase().includes(searchQuery.toLowerCase());
+            (p.fullName || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (p.dni || '').includes(searchQuery) ||
+            (p.email || '').toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesStatus = statusFilter === 'todos' || p.status === statusFilter;
 
