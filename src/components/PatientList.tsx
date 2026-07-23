@@ -197,7 +197,7 @@ export const PatientList: React.FC<PatientListProps> = ({
 
               {/* Card Footer */}
               <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
-                <span>Honorario: ${patient.sessionFee.toLocaleString('es-AR')}</span>
+                                            <span>Honorario: ${(patient.sessionFee || 0).toLocaleString('es-AR')}</span>
                 <span className="text-teal-600 dark:text-teal-400 font-semibold group-hover:translate-x-1 transition flex items-center">
                   Ver Ficha <ChevronRight className="w-3.5 h-3.5 ml-0.5" />
                 </span>
