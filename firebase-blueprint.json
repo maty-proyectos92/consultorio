@@ -1,0 +1,117 @@
+{
+  "entities": {
+    "Patient": {
+      "title": "Paciente",
+      "description": "Registro de paciente del consultorio psicológico",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "fullName": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "dni": { "type": "string" },
+        "birthDate": { "type": "string" },
+        "occupation": { "type": "string" },
+        "emergencyContact": { "type": "string" },
+        "healthInsurance": { "type": "string" },
+        "status": { "type": "string", "enum": ["activo", "pausa", "alta"] },
+        "createdAt": { "type": "string" },
+        "sessionFee": { "type": "number" },
+        "initialDiagnosis": { "type": "string" },
+        "treatmentGoal": { "type": "string" }
+      },
+      "required": ["fullName", "status"]
+    },
+    "Appointment": {
+      "title": "Cita",
+      "description": "Cita o sesión de psicología agendada",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "patientId": { "type": "string" },
+        "patientName": { "type": "string" },
+        "dateTime": { "type": "string" },
+        "durationMinutes": { "type": "number" },
+        "modality": { "type": "string", "enum": ["presencial", "online"] },
+        "status": { "type": "string", "enum": ["confirmada", "realizada", "cancelada", "reprogramada", "ausente"] },
+        "cost": { "type": "number" },
+        "notes": { "type": "string" }
+      },
+      "required": ["patientId", "dateTime", "status"]
+    },
+    "SessionNote": {
+      "title": "NotaEvolucion",
+      "description": "Registro de evolución clínica en formato SOAP/DAP",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "patientId": { "type": "string" },
+        "appointmentId": { "type": "string" },
+        "date": { "type": "string" },
+        "sessionNumber": { "type": "number" },
+        "subjective": { "type": "string" },
+        "objective": { "type": "string" },
+        "assessment": { "type": "string" },
+        "plan": { "type": "string" },
+        "homework": { "type": "string" },
+        "confidentialNotes": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["patientId", "date"]
+    },
+    "Payment": {
+      "title": "Pago",
+      "description": "Registro de cobro o pago de honorarios profesionales",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "patientId": { "type": "string" },
+        "patientName": { "type": "string" },
+        "date": { "type": "string" },
+        "amount": { "type": "number" },
+        "method": { "type": "string", "enum": ["efectivo", "transferencia", "tarjeta", "obra_social"] },
+        "status": { "type": "string", "enum": ["completado", "pendiente"] },
+        "invoiceNumber": { "type": "string" },
+        "concept": { "type": "string" }
+      },
+      "required": ["patientId", "amount", "date", "status"]
+    },
+    "Document": {
+      "title": "Documento",
+      "description": "Plantillas, consentimientos e informes de pacientes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "patientId": { "type": "string" },
+        "title": { "type": "string" },
+        "type": { "type": "string", "enum": ["consentimiento", "informe_alta", "anamnesis", "certificado", "otro"] },
+        "content": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "signed": { "type": "boolean" }
+      },
+      "required": ["title", "type"]
+    }
+  },
+  "firestore": {
+    "/patients/{patientId}": {
+      "schema": { "$ref": "#/entities/Patient" },
+      "description": "Pacientes del consultorio"
+    },
+    "/appointments/{appointmentId}": {
+      "schema": { "$ref": "#/entities/Appointment" },
+      "description": "Agenda de citas"
+    },
+    "/session_notes/{noteId}": {
+      "schema": { "$ref": "#/entities/SessionNote" },
+      "description": "Notas clínicas y evolución"
+    },
+    "/payments/{paymentId}": {
+      "schema": { "$ref": "#/entities/Payment" },
+      "description": "Control de cobros e ingresos"
+    },
+    "/documents/{documentId}": {
+      "schema": { "$ref": "#/entities/Document" },
+      "description": "Documentos e informes de pacientes"
+    }
+  }
+}
