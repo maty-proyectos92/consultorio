@@ -34,12 +34,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   // Pending payments
   const pendingPayments = payments.filter((p) => p.status === 'pendiente');
-  const pendingAmountTotal = pendingPayments.reduce((acc, curr) => acc + curr.amount, 0);
+    const pendingAmountTotal = pendingPayments.reduce((acc, curr) => acc + (curr.amount || 0), 0);
 
   // Total collected this month
   const totalCollectedThisMonth = payments
     .filter((p) => p.status === 'completado')
-    .reduce((acc, curr) => acc + curr.amount, 0);
+        .reduce((acc, curr) => acc + (curr.amount || 0), 0);
 
   return (
     <div className="space-y-6">
@@ -226,7 +226,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
                     <div className="flex items-center space-x-2 self-end sm:self-center">
                       <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 mr-2">
-                        ${app.cost.toLocaleString('es-AR')}
+                                            ${(app.cost || 0).toLocaleString('es-AR')}
                       </span>
                       <button
                         onClick={() => onSelectPatient(app.patientId)}
@@ -322,7 +322,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                       </p>
                     </div>
                     <span className="text-xs font-bold text-amber-700 dark:text-amber-300">
-                      ${p.amount.toLocaleString('es-AR')}
+                                        ${(p.amount || 0).toLocaleString('es-AR')}
                     </span>
                   </div>
                 ))}
