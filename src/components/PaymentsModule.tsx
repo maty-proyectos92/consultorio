@@ -34,11 +34,11 @@ export const PaymentsModule: React.FC<PaymentsModuleProps> = ({
 
   const totalCollected = payments
     .filter((p) => p.status === 'completado')
-    .reduce((sum, p) => sum + p.amount, 0);
+        .reduce((sum, p) => sum + (p.amount || 0), 0);
 
   const totalPending = payments
     .filter((p) => p.status === 'pendiente')
-    .reduce((sum, p) => sum + p.amount, 0);
+        .reduce((sum, p) => sum + (p.amount || 0), 0);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,10 +74,9 @@ export const PaymentsModule: React.FC<PaymentsModuleProps> = ({
     doc.text(`Fecha: ${payment.date}`, 20, 45);
     doc.text(`Paciente: ${payment.patientName}`, 20, 52);
     doc.text(`Concepto: ${payment.concept}`, 20, 59);
-    doc.text(`Método de Pago: ${payment.method.toUpperCase()}`, 20, 66);
-    doc.text(`Monto Abonado: $${payment.amount.toLocaleString('es-AR')} ARS`, 20, 73);
-    doc.text(`Estado: ${payment.status.toUpperCase()}`, 20, 80);
-
+        doc.text(`Método de Pago: ${(payment.method || '').toUpperCase()}`, 20, 66);
+        doc.text(`Monto Abonado: $${(payment.amount || 0).toLocaleString('es-AR')} ARS`, 20, 73);
+        doc.text(`Estado: ${(payment.status || '').toUpperCase()}`, 20, 80);
     doc.line(20, 90, 190, 90);
     doc.text('Lic. Psicología Clínica - Firma y Sello Profesional', 20, 105);
 
@@ -203,7 +202,7 @@ export const PaymentsModule: React.FC<PaymentsModuleProps> = ({
                   <td className="py-3 px-4 text-slate-600 dark:text-slate-300">{p.concept}</td>
                   <td className="py-3 px-4 capitalize text-slate-500">{p.method}</td>
                   <td className="py-3 px-4 font-bold text-slate-900 dark:text-white">
-                    ${p.amount.toLocaleString('es-AR')}
+                                        ${(p.amount || 0).toLocaleString('es-AR')}
                   </td>
                   <td className="py-3 px-4">
                     <button
