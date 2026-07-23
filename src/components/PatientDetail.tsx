@@ -151,7 +151,7 @@ export const PatientDetail: React.FC<PatientDetailProps> = ({
                   <Mail className="w-3.5 h-3.5 text-slate-400 mr-1" /> {patient.email}
                 </span>
                 <span className="font-semibold text-teal-600 dark:text-teal-400">
-                  Co-pago: ${patient.sessionFee.toLocaleString('es-AR')} / sesión
+                                Co-pago: ${(patient.sessionFee || 0).toLocaleString('es-AR')} / sesión
                 </span>
               </div>
             </div>
@@ -386,7 +386,7 @@ export const PatientDetail: React.FC<PatientDetailProps> = ({
                     </p>
                   </div>
                   <span className={`font-bold text-sm ${p.status === 'completado' ? 'text-emerald-600' : 'text-amber-600'}`}>
-                    ${p.amount.toLocaleString('es-AR')}
+                                        ${(p.amount || 0).toLocaleString('es-AR')}
                   </span>
                 </div>
               ))}
