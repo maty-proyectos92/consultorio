@@ -137,7 +137,7 @@ export const AgendaCalendar: React.FC<AgendaCalendarProps> = ({
                     </div>
 
                     <p className="text-xs text-slate-500 dark:text-slate-400">
-                      Duración: {app.durationMinutes} minutos • Honorario: ${app.cost.toLocaleString('es-AR')}
+                                        Duración: {app.durationMinutes} minutos • Honorario: ${(app.cost || 0).toLocaleString('es-AR')}
                     </p>
 
                     {app.notes && (
